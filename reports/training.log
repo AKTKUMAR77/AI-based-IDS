@@ -1,0 +1,260 @@
+2026-10-16 00:02:39,677 - DL-IDS - INFO - ============================================================
+2026-10-16 00:02:39,677 - DL-IDS - INFO - DL-IDS: AI-Based Intrusion Detection System
+2026-10-16 00:02:39,678 - DL-IDS - INFO - ============================================================
+2026-10-16 00:02:39,678 - DL-IDS - INFO - 
+[STEP 1] Loading and inspecting dataset...
+2026-10-16 00:02:39,678 - DL-IDS.data_loader - INFO - Found 8 CSV files in C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\dataset
+2026-10-16 00:02:39,678 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv
+2026-10-16 00:02:40,790 - DL-IDS.data_loader - INFO -   Loaded 225,745 rows from Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv
+2026-10-16 00:02:40,791 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv
+2026-10-16 00:02:41,989 - DL-IDS.data_loader - INFO -   Loaded 286,467 rows from Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv
+2026-10-16 00:02:41,990 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Morning.pcap_ISCX.csv
+2026-10-16 00:02:42,824 - DL-IDS.data_loader - INFO -   Loaded 191,033 rows from Friday-WorkingHours-Morning.pcap_ISCX.csv
+2026-10-16 00:02:42,824 - DL-IDS.data_loader - INFO - Loading: Monday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:02:45,414 - DL-IDS.data_loader - INFO -   Loaded 529,918 rows from Monday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:02:45,414 - DL-IDS.data_loader - INFO - Loading: Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv
+2026-10-16 00:02:46,582 - DL-IDS.data_loader - INFO -   Loaded 288,602 rows from Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv
+2026-10-16 00:02:46,582 - DL-IDS.data_loader - INFO - Loading: Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv
+2026-10-16 00:02:47,308 - DL-IDS.data_loader - INFO -   Loaded 170,366 rows from Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv
+2026-10-16 00:02:47,308 - DL-IDS.data_loader - INFO - Loading: Tuesday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:02:49,397 - DL-IDS.data_loader - INFO -   Loaded 445,909 rows from Tuesday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:02:49,397 - DL-IDS.data_loader - INFO - Loading: Wednesday-workingHours.pcap_ISCX.csv
+2026-10-16 00:02:53,013 - DL-IDS.data_loader - INFO -   Loaded 692,703 rows from Wednesday-workingHours.pcap_ISCX.csv
+2026-10-16 00:02:53,367 - DL-IDS.data_loader - INFO - Combined dataset: 2,830,743 rows, 79 columns
+2026-10-16 00:07:21,802 - DL-IDS - INFO - ============================================================
+2026-10-16 00:07:21,802 - DL-IDS - INFO - DL-IDS: AI-Based Intrusion Detection System
+2026-10-16 00:07:21,802 - DL-IDS - INFO - ============================================================
+2026-10-16 00:07:21,802 - DL-IDS - INFO - 
+[STEP 1] Loading and inspecting dataset...
+2026-10-16 00:07:21,802 - DL-IDS.data_loader - INFO - Found 8 CSV files in C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\dataset
+2026-10-16 00:07:21,802 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv
+2026-10-16 00:07:22,750 - DL-IDS.data_loader - INFO -   Loaded 225,745 rows from Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv
+2026-10-16 00:07:22,750 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv
+2026-10-16 00:07:23,799 - DL-IDS.data_loader - INFO -   Loaded 286,467 rows from Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv
+2026-10-16 00:07:23,799 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Morning.pcap_ISCX.csv
+2026-10-16 00:07:24,576 - DL-IDS.data_loader - INFO -   Loaded 191,033 rows from Friday-WorkingHours-Morning.pcap_ISCX.csv
+2026-10-16 00:07:24,576 - DL-IDS.data_loader - INFO - Loading: Monday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:07:26,790 - DL-IDS.data_loader - INFO -   Loaded 529,918 rows from Monday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:07:26,790 - DL-IDS.data_loader - INFO - Loading: Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv
+2026-10-16 00:07:27,939 - DL-IDS.data_loader - INFO -   Loaded 288,602 rows from Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv
+2026-10-16 00:07:27,939 - DL-IDS.data_loader - INFO - Loading: Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv
+2026-10-16 00:07:28,692 - DL-IDS.data_loader - INFO -   Loaded 170,366 rows from Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv
+2026-10-16 00:07:28,692 - DL-IDS.data_loader - INFO - Loading: Tuesday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:07:30,628 - DL-IDS.data_loader - INFO -   Loaded 445,909 rows from Tuesday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:07:30,628 - DL-IDS.data_loader - INFO - Loading: Wednesday-workingHours.pcap_ISCX.csv
+2026-10-16 00:07:33,707 - DL-IDS.data_loader - INFO -   Loaded 692,703 rows from Wednesday-workingHours.pcap_ISCX.csv
+2026-10-16 00:07:33,996 - DL-IDS.data_loader - INFO - Combined dataset: 2,830,743 rows, 79 columns
+2026-10-16 00:07:46,885 - DL-IDS - INFO - Dataset loaded in 25.1s
+2026-10-16 00:07:46,885 - DL-IDS - INFO - 
+[STEP 2] Preprocessing data...
+2026-10-16 00:07:46,886 - DL-IDS.preprocessing - INFO - Cleaning data...
+2026-10-16 00:07:47,170 - DL-IDS.preprocessing - INFO -   Dropped 10 constant/irrelevant columns
+2026-10-16 00:07:47,500 - DL-IDS.preprocessing - INFO -   Dropped duplicate column: Fwd Header Length.1
+2026-10-16 00:07:50,761 - DL-IDS.preprocessing - INFO -   Replaced 2867 rows with infinite values -> NaN
+2026-10-16 00:07:51,745 - DL-IDS.preprocessing - INFO -   Dropped 2867 rows with NaN values
+2026-10-16 00:08:11,310 - DL-IDS.preprocessing - INFO -   Removed 307,078 duplicate rows
+2026-10-16 00:08:11,310 - DL-IDS.preprocessing - INFO -   Cleaning complete: 2,830,743 -> 2,520,798 rows (309,945 removed)
+2026-10-16 00:08:12,516 - DL-IDS.preprocessing - INFO - Feature count: 67
+2026-10-16 00:08:13,358 - DL-IDS.preprocessing - INFO - Label mapping: {'Bot': 0, 'DDoS': 1, 'DoS': 2, 'FTP-Patator': 3, 'Heartbleed': 4, 'Infiltration': 5, 'Normal': 6, 'PortScan': 7, 'SSH-Patator': 8, 'Web Attack � Brute Force': 9, 'Web Attack � Sql Injection': 10, 'Web Attack � XSS': 11}
+2026-10-16 00:18:46,543 - DL-IDS - INFO - ============================================================
+2026-10-16 00:18:46,543 - DL-IDS - INFO - DL-IDS: AI-Based Intrusion Detection System
+2026-10-16 00:18:46,543 - DL-IDS - INFO - ============================================================
+2026-10-16 00:18:46,543 - DL-IDS - INFO - 
+[STEP 1] Loading and inspecting dataset...
+2026-10-16 00:18:46,543 - DL-IDS.data_loader - INFO - Found 8 CSV files in C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\dataset
+2026-10-16 00:18:46,543 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv
+2026-10-16 00:18:47,486 - DL-IDS.data_loader - INFO -   Loaded 225,745 rows from Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv
+2026-10-16 00:18:47,486 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv
+2026-10-16 00:18:48,594 - DL-IDS.data_loader - INFO -   Loaded 286,467 rows from Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv
+2026-10-16 00:18:48,594 - DL-IDS.data_loader - INFO - Loading: Friday-WorkingHours-Morning.pcap_ISCX.csv
+2026-10-16 00:18:49,439 - DL-IDS.data_loader - INFO -   Loaded 191,033 rows from Friday-WorkingHours-Morning.pcap_ISCX.csv
+2026-10-16 00:18:49,439 - DL-IDS.data_loader - INFO - Loading: Monday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:18:51,785 - DL-IDS.data_loader - INFO -   Loaded 529,918 rows from Monday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:18:51,786 - DL-IDS.data_loader - INFO - Loading: Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv
+2026-10-16 00:18:52,955 - DL-IDS.data_loader - INFO -   Loaded 288,602 rows from Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv
+2026-10-16 00:18:52,955 - DL-IDS.data_loader - INFO - Loading: Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv
+2026-10-16 00:18:53,721 - DL-IDS.data_loader - INFO -   Loaded 170,366 rows from Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv
+2026-10-16 00:18:53,721 - DL-IDS.data_loader - INFO - Loading: Tuesday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:18:55,706 - DL-IDS.data_loader - INFO -   Loaded 445,909 rows from Tuesday-WorkingHours.pcap_ISCX.csv
+2026-10-16 00:18:55,706 - DL-IDS.data_loader - INFO - Loading: Wednesday-workingHours.pcap_ISCX.csv
+2026-10-16 00:18:58,785 - DL-IDS.data_loader - INFO -   Loaded 692,703 rows from Wednesday-workingHours.pcap_ISCX.csv
+2026-10-16 00:18:59,076 - DL-IDS.data_loader - INFO - Combined dataset: 2,830,743 rows, 79 columns
+2026-10-16 00:19:12,126 - DL-IDS - INFO - Dataset loaded in 25.6s
+2026-10-16 00:19:12,126 - DL-IDS - INFO - 
+[STEP 2] Preprocessing data...
+2026-10-16 00:19:12,127 - DL-IDS.preprocessing - INFO - Cleaning data...
+2026-10-16 00:19:12,408 - DL-IDS.preprocessing - INFO -   Dropped 10 constant/irrelevant columns
+2026-10-16 00:19:12,756 - DL-IDS.preprocessing - INFO -   Dropped duplicate column: Fwd Header Length.1
+2026-10-16 00:19:15,768 - DL-IDS.preprocessing - INFO -   Replaced 2867 rows with infinite values -> NaN
+2026-10-16 00:19:16,691 - DL-IDS.preprocessing - INFO -   Dropped 2867 rows with NaN values
+2026-10-16 00:19:31,496 - DL-IDS.preprocessing - INFO -   Removed 307,078 duplicate rows
+2026-10-16 00:19:31,496 - DL-IDS.preprocessing - INFO -   Cleaning complete: 2,830,743 -> 2,520,798 rows (309,945 removed)
+2026-10-16 00:19:32,221 - DL-IDS.preprocessing - INFO - Subsampling: capping classes to max 25,000 samples per class...
+2026-10-16 00:19:32,747 - DL-IDS.preprocessing - INFO - Dataset size after class capping: 113,288 rows
+2026-10-16 00:19:32,759 - DL-IDS.preprocessing - INFO - Feature count: 67
+2026-10-16 00:19:32,786 - DL-IDS.preprocessing - INFO - Label mapping: {'Bot': 0, 'DDoS': 1, 'DoS': 2, 'FTP-Patator': 3, 'Heartbleed': 4, 'Infiltration': 5, 'Normal': 6, 'PortScan': 7, 'SSH-Patator': 8, 'Web Attack': 9}
+2026-10-16 00:19:32,843 - DL-IDS.preprocessing - INFO - Split sizes - Train: 101,959, Val: 5,664, Test: 5,665
+2026-10-16 00:19:32,877 - DL-IDS.preprocessing - INFO - Fitted standard scaler on 101,959 samples
+2026-10-16 00:19:32,901 - DL-IDS.preprocessing - INFO - Class weights: {'Bot': '5.816', 'DDoS': '0.453', 'DoS': '0.453', 'FTP-Patator': '1.910', 'Heartbleed': '25.000', 'Infiltration': '25.000', 'Normal': '0.453', 'PortScan': '0.453', 'SSH-Patator': '3.519', 'Web Attack': '5.286'}
+2026-10-16 00:19:32,987 - DL-IDS - INFO - Preprocessing complete in 20.9s
+2026-10-16 00:19:32,987 - DL-IDS - INFO - Features: 67, Classes: 10
+2026-10-16 00:19:32,987 - DL-IDS - INFO - Train: 101,959, Val: 5,664, Test: 5,665
+2026-10-16 00:19:32,987 - DL-IDS - INFO - Classes: ['Bot', 'DDoS', 'DoS', 'FTP-Patator', 'Heartbleed', 'Infiltration', 'Normal', 'PortScan', 'SSH-Patator', 'Web Attack']
+2026-10-16 00:19:32,988 - DL-IDS - INFO - 
+[STEP 3] Training DL-IDS (CNN-LSTM) model...
+2026-10-16 00:19:32,990 - DL-IDS - INFO - DL-IDS parameters: 128,902 total, 128,902 trainable
+2026-10-16 00:19:32,990 - DL-IDS - INFO - Model architecture:
+DLIDS(
+  (conv1): Conv1d(1, 32, kernel_size=(3,), stride=(1,), padding=(1,))
+  (pool1): MaxPool1d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (cnn_dropout1): Dropout(p=0.3, inplace=False)
+  (conv2): Conv1d(32, 64, kernel_size=(3,), stride=(1,), padding=(1,))
+  (pool2): MaxPool1d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (cnn_dropout2): Dropout(p=0.3, inplace=False)
+  (lstm): LSTM(64, 85, num_layers=2, batch_first=True, dropout=0.3)
+  (fc1): Linear(in_features=85, out_features=128, bias=True)
+  (fc_dropout): Dropout(p=0.5, inplace=False)
+  (fc2): Linear(in_features=128, out_features=10, bias=True)
+  (bn1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+  (bn2): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+  (bn_fc): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, bias=True, track_running_stats=True)
+)
+2026-10-16 00:19:34,266 - DL-IDS.train - INFO - Using class-weighted cross-entropy loss
+2026-10-16 00:19:34,266 - DL-IDS.train - INFO - Model parameters: 128,902 total, 128,902 trainable
+2026-10-16 00:19:34,267 - DL-IDS.train - INFO - Training for 15 epochs, batch_size=128
+2026-10-16 00:19:34,267 - DL-IDS.train - INFO - Optimizer: rmsprop, LR: 0.001
+2026-10-16 00:19:54,141 - DL-IDS.train - INFO - Epoch 1/15 [19.9s] - Loss: 0.7860/0.3155 - Acc: 0.7103/0.8897 - Val F1: 0.8901
+2026-10-16 00:19:54,146 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.3155)
+2026-10-16 00:20:14,145 - DL-IDS.train - INFO - Epoch 2/15 [20.0s] - Loss: 0.3477/0.1836 - Acc: 0.8931/0.9326 - Val F1: 0.9341
+2026-10-16 00:20:14,148 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.1836)
+2026-10-16 00:20:34,629 - DL-IDS.train - INFO - Epoch 3/15 [20.5s] - Loss: 0.2630/0.1313 - Acc: 0.9236/0.9391 - Val F1: 0.9410
+2026-10-16 00:20:34,632 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.1313)
+2026-10-16 00:20:55,137 - DL-IDS.train - INFO - Epoch 4/15 [20.5s] - Loss: 0.2226/0.1096 - Acc: 0.9367/0.9507 - Val F1: 0.9515
+2026-10-16 00:20:55,140 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.1096)
+2026-10-16 00:21:15,555 - DL-IDS.train - INFO - Epoch 5/15 [20.4s] - Loss: 0.1833/0.1150 - Acc: 0.9477/0.9585 - Val F1: 0.9591
+2026-10-16 00:21:36,219 - DL-IDS.train - INFO - Epoch 6/15 [20.7s] - Loss: 0.1758/0.1184 - Acc: 0.9517/0.9573 - Val F1: 0.9580
+2026-10-16 00:21:56,990 - DL-IDS.train - INFO - Epoch 7/15 [20.8s] - Loss: 0.1601/0.0893 - Acc: 0.9566/0.9654 - Val F1: 0.9658
+2026-10-16 00:21:56,994 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.0893)
+2026-10-16 00:22:17,604 - DL-IDS.train - INFO - Epoch 8/15 [20.6s] - Loss: 0.1431/0.0968 - Acc: 0.9592/0.9620 - Val F1: 0.9627
+2026-10-16 00:22:37,884 - DL-IDS.train - INFO - Epoch 9/15 [20.3s] - Loss: 0.1421/0.0732 - Acc: 0.9618/0.9688 - Val F1: 0.9692
+2026-10-16 00:22:37,887 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.0732)
+2026-10-16 00:22:58,476 - DL-IDS.train - INFO - Epoch 10/15 [20.6s] - Loss: 0.1285/0.0831 - Acc: 0.9632/0.9725 - Val F1: 0.9728
+2026-10-16 00:23:18,875 - DL-IDS.train - INFO - Epoch 11/15 [20.4s] - Loss: 0.1212/0.0683 - Acc: 0.9657/0.9689 - Val F1: 0.9692
+2026-10-16 00:23:18,879 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.0683)
+2026-10-16 00:23:39,032 - DL-IDS.train - INFO - Epoch 12/15 [20.2s] - Loss: 0.1179/0.1027 - Acc: 0.9674/0.9732 - Val F1: 0.9736
+2026-10-16 00:23:59,755 - DL-IDS.train - INFO - Epoch 13/15 [20.7s] - Loss: 0.1142/0.0748 - Acc: 0.9685/0.9732 - Val F1: 0.9733
+2026-10-16 00:24:20,266 - DL-IDS.train - INFO - Epoch 14/15 [20.5s] - Loss: 0.1112/0.0650 - Acc: 0.9687/0.9721 - Val F1: 0.9727
+2026-10-16 00:24:20,269 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.0650)
+2026-10-16 00:24:40,523 - DL-IDS.train - INFO - Epoch 15/15 [20.3s] - Loss: 0.1065/0.0669 - Acc: 0.9697/0.9723 - Val F1: 0.9728
+2026-10-16 00:24:40,523 - DL-IDS.train - INFO - Training complete in 5m 6.3s
+2026-10-16 00:24:40,556 - DL-IDS.train - INFO - Loaded best model from epoch 14
+2026-10-16 00:24:40,557 - DL-IDS - INFO - DL-IDS training complete in 5m 6.3s
+2026-10-16 00:24:40,559 - DL-IDS.train - INFO - Model saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\artifacts\dl_ids_model.pt
+2026-10-16 00:24:40,560 - DL-IDS.train - INFO - Training history saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\dl_ids_history.json
+2026-10-16 00:24:40,563 - DL-IDS.preprocessing - INFO - Preprocessing artifacts saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\artifacts
+2026-10-16 00:24:40,563 - DL-IDS - INFO - 
+[STEP 4] Evaluating DL-IDS model...
+2026-10-16 00:24:40,763 - DL-IDS.evaluate - INFO - Evaluation Results:
+2026-10-16 00:24:40,763 - DL-IDS.evaluate - INFO -   Accuracy: 0.9677
+2026-10-16 00:24:40,763 - DL-IDS.evaluate - INFO -   Precision (macro): 0.7812
+2026-10-16 00:24:40,763 - DL-IDS.evaluate - INFO -   Recall (macro): 0.8756
+2026-10-16 00:24:40,763 - DL-IDS.evaluate - INFO -   F1 (macro): 0.8156
+2026-10-16 00:24:40,763 - DL-IDS.evaluate - INFO -   F1 (weighted): 0.9680
+2026-10-16 00:24:40,763 - DL-IDS.evaluate - INFO -   FPR (overall): 0.0036
+2026-10-16 00:24:40,763 - DL-IDS.evaluate - INFO -   Inference time: 0.2s (0.032 ms/sample)
+2026-10-16 00:24:40,764 - DL-IDS.evaluate - INFO - Metrics saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\dl_ids_metrics.json
+2026-10-16 00:24:41,050 - DL-IDS.evaluate - INFO - Confusion matrix saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots\confusion_matrix.png
+2026-10-16 00:24:41,310 - DL-IDS.evaluate - INFO - Confusion matrix saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots\confusion_matrix_normalized.png
+2026-10-16 00:24:41,620 - DL-IDS.evaluate - INFO - Training history plot saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots\training_history.png
+2026-10-16 00:24:41,881 - DL-IDS.evaluate - INFO - Per-class metrics plot saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots\per_class_metrics.png
+2026-10-16 00:24:42,290 - DL-IDS.evaluate - INFO - Class distribution plot saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots\class_distribution.png
+2026-10-16 00:24:42,290 - DL-IDS.evaluate - INFO - All plots saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots
+2026-10-16 00:24:42,290 - DL-IDS - INFO - 
+[STEP 5] Training Random Forest baseline...
+2026-10-16 00:24:43,789 - DL-IDS - INFO - Random Forest training complete in 1.5s
+2026-10-16 00:24:43,828 - DL-IDS.evaluate - INFO - Metrics saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\rf_metrics.json
+2026-10-16 00:24:43,853 - DL-IDS - INFO - Random Forest model saved
+2026-10-16 00:24:44,107 - DL-IDS.evaluate - INFO - Confusion matrix saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots\rf_confusion_matrix.png
+2026-10-16 00:24:44,107 - DL-IDS - INFO - 
+[STEP 6] Training CNN-only baseline...
+2026-10-16 00:24:44,108 - DL-IDS.train - INFO - Using class-weighted cross-entropy loss
+2026-10-16 00:24:44,108 - DL-IDS.train - INFO - Model parameters: 49,290 total, 49,290 trainable
+2026-10-16 00:24:44,109 - DL-IDS.train - INFO - Training for 15 epochs, batch_size=128
+2026-10-16 00:24:44,109 - DL-IDS.train - INFO - Optimizer: rmsprop, LR: 0.001
+2026-10-16 00:24:51,001 - DL-IDS.train - INFO - Epoch 1/15 [6.9s] - Loss: 0.3651/0.2059 - Acc: 0.9271/0.9707 - Val F1: 0.9709
+2026-10-16 00:24:51,004 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.2059)
+2026-10-16 00:24:58,157 - DL-IDS.train - INFO - Epoch 2/15 [7.2s] - Loss: 0.1647/0.2059 - Acc: 0.9672/0.9737 - Val F1: 0.9735
+2026-10-16 00:24:58,159 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.2059)
+2026-10-16 00:25:05,373 - DL-IDS.train - INFO - Epoch 3/15 [7.2s] - Loss: 0.1382/0.0649 - Acc: 0.9726/0.9804 - Val F1: 0.9806
+2026-10-16 00:25:05,376 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.0649)
+2026-10-16 00:25:12,365 - DL-IDS.train - INFO - Epoch 4/15 [7.0s] - Loss: 0.1141/0.2054 - Acc: 0.9748/0.9748 - Val F1: 0.9751
+2026-10-16 00:25:19,636 - DL-IDS.train - INFO - Epoch 5/15 [7.3s] - Loss: 0.1033/0.0603 - Acc: 0.9767/0.9815 - Val F1: 0.9815
+2026-10-16 00:25:19,638 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.0603)
+2026-10-16 00:25:26,816 - DL-IDS.train - INFO - Epoch 6/15 [7.2s] - Loss: 0.1008/0.1152 - Acc: 0.9781/0.9802 - Val F1: 0.9804
+2026-10-16 00:25:33,848 - DL-IDS.train - INFO - Epoch 7/15 [7.0s] - Loss: 0.0991/0.0556 - Acc: 0.9793/0.9804 - Val F1: 0.9806
+2026-10-16 00:25:33,851 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.0556)
+2026-10-16 00:25:40,994 - DL-IDS.train - INFO - Epoch 8/15 [7.1s] - Loss: 0.0840/0.1230 - Acc: 0.9800/0.9839 - Val F1: 0.9842
+2026-10-16 00:25:48,128 - DL-IDS.train - INFO - Epoch 9/15 [7.1s] - Loss: 0.0832/0.2145 - Acc: 0.9811/0.9831 - Val F1: 0.9833
+2026-10-16 00:25:55,249 - DL-IDS.train - INFO - Epoch 10/15 [7.1s] - Loss: 0.0848/0.0658 - Acc: 0.9810/0.9809 - Val F1: 0.9812
+2026-10-16 00:26:02,068 - DL-IDS.train - INFO - Epoch 11/15 [6.8s] - Loss: 0.0784/0.0453 - Acc: 0.9812/0.9825 - Val F1: 0.9828
+2026-10-16 00:26:02,070 - DL-IDS.train - INFO -   Saved best model (val_loss: 0.0453)
+2026-10-16 00:26:08,811 - DL-IDS.train - INFO - Epoch 12/15 [6.7s] - Loss: 0.0745/0.0598 - Acc: 0.9824/0.9848 - Val F1: 0.9849
+2026-10-16 00:26:16,210 - DL-IDS.train - INFO - Epoch 13/15 [7.4s] - Loss: 0.0737/0.0524 - Acc: 0.9828/0.9852 - Val F1: 0.9854
+2026-10-16 00:26:23,479 - DL-IDS.train - INFO - Epoch 14/15 [7.3s] - Loss: 0.0676/0.0487 - Acc: 0.9826/0.9841 - Val F1: 0.9844
+2026-10-16 00:26:30,398 - DL-IDS.train - INFO - Epoch 15/15 [6.9s] - Loss: 0.0765/0.0503 - Acc: 0.9831/0.9831 - Val F1: 0.9833
+2026-10-16 00:26:30,398 - DL-IDS.train - INFO - Training complete in 1m 46.3s
+2026-10-16 00:26:30,416 - DL-IDS.train - INFO - Loaded best model from epoch 11
+2026-10-16 00:26:30,418 - DL-IDS.train - INFO - Model saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\artifacts\cnn_model.pt
+2026-10-16 00:26:30,419 - DL-IDS.train - INFO - Training history saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\cnn_history.json
+2026-10-16 00:26:30,528 - DL-IDS.evaluate - INFO - Evaluation Results:
+2026-10-16 00:26:30,528 - DL-IDS.evaluate - INFO -   Accuracy: 0.9820
+2026-10-16 00:26:30,528 - DL-IDS.evaluate - INFO -   Precision (macro): 0.8112
+2026-10-16 00:26:30,529 - DL-IDS.evaluate - INFO -   Recall (macro): 0.8862
+2026-10-16 00:26:30,529 - DL-IDS.evaluate - INFO -   F1 (macro): 0.8380
+2026-10-16 00:26:30,529 - DL-IDS.evaluate - INFO -   F1 (weighted): 0.9822
+2026-10-16 00:26:30,529 - DL-IDS.evaluate - INFO -   FPR (overall): 0.0020
+2026-10-16 00:26:30,529 - DL-IDS.evaluate - INFO -   Inference time: 0.1s (0.017 ms/sample)
+2026-10-16 00:26:30,530 - DL-IDS.evaluate - INFO - Metrics saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\cnn_metrics.json
+2026-10-16 00:26:30,769 - DL-IDS.evaluate - INFO - Confusion matrix saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots\cnn_confusion_matrix.png
+2026-10-16 00:26:30,769 - DL-IDS - INFO - 
+[STEP 7] Generating model comparison...
+2026-10-16 00:26:30,948 - DL-IDS.evaluate - INFO - Model comparison plot saved to C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots\model_comparison.png
+2026-10-16 00:26:30,948 - DL-IDS - INFO - 
+================================================================================
+2026-10-16 00:26:30,948 - DL-IDS - INFO - MODEL COMPARISON RESULTS
+2026-10-16 00:26:30,948 - DL-IDS - INFO - ================================================================================
+2026-10-16 00:26:30,948 - DL-IDS - INFO - 
+DL-IDS (CNN-LSTM):
+2026-10-16 00:26:30,948 - DL-IDS - INFO -   Accuracy: 0.9677
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Precision (macro): 0.7812
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Recall (macro): 0.8756
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   F1 (macro): 0.8156
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   F1 (weighted): 0.9680
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Training Time: 5m 6.3s
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Inference Time (ms/sample): 0.032
+2026-10-16 00:26:30,949 - DL-IDS - INFO - 
+CNN Only:
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Accuracy: 0.9820
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Precision (macro): 0.8112
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Recall (macro): 0.8862
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   F1 (macro): 0.8380
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   F1 (weighted): 0.9822
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Training Time: 1m 46.3s
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Inference Time (ms/sample): 0.017
+2026-10-16 00:26:30,949 - DL-IDS - INFO - 
+Random Forest:
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Accuracy: 0.9970
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Precision (macro): 0.8935
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Recall (macro): 0.8964
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   F1 (macro): 0.8949
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   F1 (weighted): 0.9968
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Training Time: 1.5s
+2026-10-16 00:26:30,949 - DL-IDS - INFO -   Inference Time (ms/sample): 0.005
+2026-10-16 00:26:30,949 - DL-IDS - INFO - ================================================================================
+2026-10-16 00:26:30,950 - DL-IDS - INFO - 
+============================================================
+2026-10-16 00:26:30,950 - DL-IDS - INFO - TRAINING PIPELINE COMPLETE
+2026-10-16 00:26:30,950 - DL-IDS - INFO - ============================================================
+2026-10-16 00:26:30,950 - DL-IDS - INFO - Artifacts saved to: C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\artifacts
+2026-10-16 00:26:30,950 - DL-IDS - INFO - Reports saved to: C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports
+2026-10-16 00:26:30,950 - DL-IDS - INFO - Plots saved to: C:\Users\Ankit\Main\Programing\Semester Project Work\AIIDS\reports\plots

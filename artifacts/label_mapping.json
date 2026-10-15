@@ -1,0 +1,1 @@
+{"Bot": 0, "DDoS": 1, "DoS": 2, "FTP-Patator": 3, "Heartbleed": 4, "Infiltration": 5, "Normal": 6, "PortScan": 7, "SSH-Patator": 8, "Web Attack": 9}

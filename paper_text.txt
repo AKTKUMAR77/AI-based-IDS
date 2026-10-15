@@ -1,0 +1,1057 @@
+--- PAGE 1 ---
+Research Article
+DL-IDS: Extracting Features Using CNN-LSTM Hybrid
+Network for Intrusion Detection System
+Pengfei Sun,1Pengju Liu,2Qi Li,3Chenxi Liu,2Xiangling Lu,2Ruochen Hao,2
+and Jinpeng Chen1
+1School of Computer Science (National Pilot Software Engineering School), Beijing University of Posts and Telecommunications,
+Beijing 100876, China
+2School of Cyberspace Security, Beijing University of Posts and Telecommunications, Beijing 100876, China
+3Institute for Network Sciences and Cyberspace, Tsinghua University, Beijing 100084, China
+Correspondence should be addressed to Jinpeng Chen; chenjinpeng@nlsde.buaa.edu.cn
+Received 6 April 2020; Revised 17 July 2020; Accepted 25 July 2020; Published 28 August 2020
+Academic Editor: Huaming Wu
+Copyright ©2020PengfeiSunetal.M/_hisisanopenaccessarticledistributedundertheCreativeCommonsAttributionLicense,
+which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.
+Manystudiesutilizedmachinelearningschemestoimprovenetworkintrusiondetectionsystemsrecently.Mostoftheresearchis
+basedonmanuallyextractedfeatures,butthisapproachnotonlyrequiresalotoflaborcostsbutalsolosesalotofinformationin
+the original data, resulting in low judgment accuracy and cannot be deployed in actual situations. M/_his paper develops a DL-IDS
+(deep learning-based intrusion detection system), which uses the hybrid network of Convolutional Neural Network (CNN) and
+Long Short-Term Memory Network (LSTM) to extract the spatial and temporal features of network traﬃc data and to provide a
+betterintrusiondetectionsystem.Toreducetheinﬂuenceofanunbalancednumberofsamplesofdiﬀerentattacktypesinmodel
+trainingsamplesonmodelperformance,DL-IDSusedacategoryweightoptimizationmethodtoimprovetherobustness.Finally,
+DL-IDS is tested on CICIDS2017, a reliable intrusion detection dataset that covers all the common, updated intrusions and
+cyberattacks.Inthemulticlassiﬁcationtest, DL-IDSreached98.67%inoverallaccuracy,andtheaccuracyofeachattacktype was
+above 99.50%.
+1. Introduction
+1.1. Background. In recent years, with the rapid develop-
+ment of emerging communications and information tech-
+nologies such as 5G communications, mobile Internet,
+Internet of M/_hings, “cloud computing,” and big data, net-
+work security has become increasingly important. As an
+important research content of network security, intrusion
+detection has been paid attention by experts and scholars.
+Problemsthatarecommonundertraditionalanomaly-based
+detection methods include the inaccurate feature extraction
+of network traﬃc and diﬃculty in building attack detection
+models, which leads to high false alarm rate when judging
+attack traﬃc. It is diﬃcult for network security personnel to
+ﬁnd unknown threats, which makes the defense inherently
+passive. In other words, traditional methods are no longer
+applicable to today’s Internet as per its massive data scale.Inrecent years,many scholarshave exploredhow to use
+artiﬁcial intelligence (AI) to detect and analyze network
+traﬃc for intrusion detection and defense systems. Hassan
+etal.[1]proposedanensemble-learningmodelbasedonthe
+combination of a random subspace (RS) learning method
+with random tree (RT), which detected cyberattacks of
+SCADAbyusingthenetworktraﬃcfromtheSCADA-based
+IoT platform. Khan and Gumaei [2] compared the most
+popular machine learning methods for intrusion detection
+intermsofaccuracy,precision,recall,andtrainingtimecost.
+Alqahtani et al. [3] proposed GXGBoost model to detect
+intrusion attacks based on a genetic algorithm and an ex-
+treme gradient boosting (XGBoost) classiﬁer. Derhab et al.
+[4] proposed a security architecture that integrates the
+Blockchain and the software-deﬁned network (SDN) tech-
+nologies, which focuses on the security of commands in
+industrial IoTagainst forged commands and misrouting ofHindawi
+Security and Communication Networks
+Volume 2020, Article ID 8890306,  11 pages
+https://doi.org/10.1155/2020/8890306
+
+--- PAGE 2 ---
+commands. M/_he current mainstream methods are intrusion
+detection systems based on machine learning (ML) or deep
+learning (DL). Among them, the ML-based system mainly
+classiﬁes and detects network traﬃc by analyzing the
+manuallyextractedfeaturesofnetworktraﬃc,whiletheDL-
+based system can not only analyze the manually extracted
+features but also automatically extract the features from the
+originaltraﬃc.M/_herefore,DL-basedsystemscancircumvent
+the manual feature extraction problem and enhance the
+detection accuracy compared to general ML-based systems.
+To achieve higher accuracy, DL-based intrusion detec-
+tion methods require a large amount of data for training,
+especially diﬀerent types of attack traﬃc data. In the actual
+environment and the existing datasets [KDD99, NSL-KDD,
+and CICIDS2017], the attack traﬃc is always less compared
+with normal traﬃc. Moreover, because some types of attack
+traﬃc are diﬃcult to capture and simulate, the amount of
+data available for model training is particularly small. M/_hese
+problems greatly restrict the accuracy of the DL-based
+method, making it diﬃcult to judge certain types of attacks.
+1.2. Key Contributions. M/_his paper proposes a DL-based
+intrusion detection system, DL-IDS, which uses the hybrid
+networkofConvolutionalNeuralNetwork(CNN)andLong
+Short-Term Memory Network (LSTM) to extract the tem-
+poral and spatial features of network traﬃc data to improve
+the accuracy of intrusion detection. In the model training
+phase,DL-IDSusescategoryweightstooptimizethemodel.
+M/_hismethodreducestheeﬀectofthenumberofunbalanced
+samplesofseveralattacktypesinmodeltrainingsampleson
+modelperformanceandimprovestherobustnessoftraining
+and prediction. Finally, we test DL-IDS to classify multiple
+types of network traﬃc on the CICIDS2017 dataset and
+compare it with the CNN-only model, LSTM-only model,
+andothermachinelearningmodelsbecauseCICIDS2017isa
+recent original network traﬃc dataset simulating real situ-
+ations. M/_he results show that DL-IDS reached 98.67% in
+overall accuracy, and the accuracy of each attack type was
+above 99.50%, which achieved the best results in all models.
+1.3. Paper Organization. M/_he remainder of this paper is
+organized as follows.Section 2 discusses theclassiﬁcationof
+abnormaltraﬃcas perpreviouslypublishedstudies.Section
+3 describes in detail the datasets and data preprocessing
+methods we used in this study. M/_he classiﬁer structure and
+classiﬁcationmethodsusedfortraﬃcclassiﬁcationunderthe
+proposed model are described in Section 4. Section 5
+presents the results of our model evaluation with various
+hyperparameters. Section 6 summarizes the paper and
+discusses potential future development trends.
+2. Related Work
+With the continual expansion of the Internet, network se-
+curity has become a problem that cannot be ignored.
+Malicious network behaviors such as DDos and brute force
+attacks tend to be “mixed into” malicious traﬃc. Security
+researchersseektoeﬀectivelyanalyzethemalicioustraﬃcina given network so as to identify potential attacks and
+quickly stop them [5–8].
+2.1. Traditional Intrusion Detection System. Traditional
+methods of intrusion detection mainly include statistical
+analysis methods [9], threshold analysis methods [10], and
+signature analysis methods [11]. M/_hese methods do reveal
+malicious traﬃc behavior; however, they require security
+researchers to input data related to their personal experi-
+ence;tothiseﬀect,theirvariousrulesandsetparametersare
+very ineﬃcient. Said “experience” is also only a summary of
+the malicious traﬃc behavior found in the past and is
+typically diﬃcult to quantify, so these methods cannot be
+readily adapted to the huge amount of network data and
+volatile network attacks of today’s Internet.
+2.2.IntrusionDetectionSystemBasedonML .Advancements in
+machine learning have produced models that eﬀectively
+classify and cluster traﬃc for the purposes of network se-
+curity.Earlyresearchersattemptedsimplemachinelearning
+algorithms for classiﬁcation-clustering problems in other
+ﬁelds, such as the k-Nearest Neighbor (KNN) [12], support
+vector machine (SVM) [13], and self-organizing maps
+(SOM) [14], with good results on KDD99, NSL-KDD,
+DARPA, and other datasets. M/_hese datasets are out of date,
+unfortunately, and contain not only normal data but also
+attack data that are overly simple. It is diﬃcult to use these
+datasets to simulate today’s highly complex network envi-
+ronment. It is also diﬃcult to achieve the expected eﬀect
+using these algorithms to analyze malicious traﬃc in a
+relatively new dataset, as evidenced by our work in this
+study.
+2.3. Intrusion Detection System Based on Deep Neural
+Network. M/_he success of machine learning algorithms
+generally depends on data representation [15]. Represen-
+tationlearning,alsocalledfeaturelearning,isatechniquein
+deep neural network, which can be used to learn the ex-
+planatory factors of variation behind the data. Ma et al.
+combine spectral clustering and deep neural network al-
+gorithmstodetectintrusionbehaviors[16].Niyazetal.used
+deep belief networks for developing an eﬃcient and ﬂexible
+intrusion detection system [17]. But these research methods
+construct their models to learn representations from
+manually designed traﬃc features, not taking full advantage
+oftheabilityofdeepneuralnetworks.Eesaetal.showedthat
+higher detection rate and accuracy rate with lower false
+alarm rate can be obtained byusing improved traﬃc feature
+set [18]. Learning features directly from traﬃc raw data
+should be feasible, such as in the ﬁelds of computer vision
+and natural language processing [19].
+Two most widely used deep neural network models are
+CNN and RNN. M/_he CNN uses original data as the direct
+input to thenetwork, does notnecessitate feature extraction
+or image reconstruction, has relatively few parameters, and
+requires relatively little data in process. CNNs have been
+proventobehighlyeﬀectiveintheﬁeldofimagerecognition2 SecurityandCommunicationNetworks
+
+--- PAGE 3 ---
+[20]. For certain network traﬃc of protocols, CNNs can
+perform well through fast training. Fan and Ling-zhi [21]
+extracted very accurate features by using a multilayer CNN,
+whereintheconvolutionlayerconnectstothesamplinglayer
+below; this model outperformed classical detection algo-
+rithms (e.g., SVM) on the KDD99 dataset. However, the
+CNN can only analyze a single input package—it cannot
+analyze timing information in a given traﬃc scenario. In
+reality, a single packet in an attack traﬃc scenario is normal
+data. When a large number of packets are sent at the same
+time or in a short period, this packet becomes malicious
+traﬃc. M/_he CNN does not apply in this situation, which in
+practice may lead to a large number of missed alerts.
+M/_herecurrentneuralnetwork(RNN)isalsooftenusedto
+analyze sequential information. LSTM, a branch of RNNs,
+performswell insequence information analysis applications
+such as natural language processing. Kim et al. [22] com-
+pared the LSTM-RNN network against Generalized Re-
+gression Neural Network (GRNN), Product-based Neural
+Network (PNN), k-Nearest Neighbor (KNN), SVM,
+Bayesian,andotheralgorithmsontheKDD99datasettoﬁnd
+that it was superior in every aspect they tested. M/_he LSTM
+network alone, however, centers on a direct relationship
+betweensequencesratherthantheanalysisofasinglepacket,
+so it cannot readily replace the CNN in this regard.
+Wu and Guo [23] proposed a hierarchical CNN+RNN
+neural network and carried out experiments on NSL-KDD
+and UNSW-NB15 datasets. Hsu et al. [24] and Ahsan and
+Nygard [25] used another CNN+LSTM model to perform
+multiclassiﬁcation experiments on the NSL-KDD dataset.
+Hassan et al. [26] proposed a hybriddeep learningmodel to
+detect network intrusions based on CNN network and a
+weight-dropped, long short-term memory (WDLSTM)
+network. M/_his paper mainly conducted experiments on
+UNSW-NB15 dataset. However, these studies are still based
+on extracted features in advance.
+Abdulhammed et al. [27] used Autoencoder and Prin-
+ciple Component Analysis to reduce the CICIDS2017
+dataset’s feature dimensions. M/_he resulting low-dimensional
+featuresfrombothtechniquesarethenusedtobuildvarious
+classiﬁers to detect malicious attacks. Musafer et al. [28]
+proposed a novel architecture of IDS based on advanced
+Sparse Autoencoder and Random Forest to classify the
+patterns of the normal packets from those of the network
+attacks and got good results.
+In this study, we adopted a malicious traﬃc analysis
+method based on CNN and LSTM to extract and analyze
+network traﬃc information of network raw dataset from
+both spatial and temporal dimensions. We conducted
+training and testing based on the CICIDS2017 dataset that
+wellsimulatestherealnetworkenvironment.Weranaseries
+of experiments to show that the proposed model facilitates
+very eﬀective malicious ﬂow analysis.
+3. Datasets and Preprocessing
+3.1. Dataset. M/_he IDS is the most important defense tool
+againstcomplexandlarge-scalenetworkattacks,butthelack
+of available public dataset yet hinders its furtherdevelopment. Many researchers have used private data
+within a single company or conducted manual data col-
+lection to test IDS applications, which aﬀects the credibility
+of their results to some extent. Public datasets such as
+KDD99 and NSL-KDD [29] are comprised of data
+encompassing manually selected stream characteristics
+rather than original network traﬃc. M/_he timing of the data
+collection is also outdated compared to modern attack
+methods.
+In this study, in an eﬀort to best reﬂect real traﬃc
+scenarios in real networks as well as newer means of attack,
+we chose the CICIDS2017 dataset (Canadian Institute for
+Cybersecurity)[30]whichcontainsbenigntraﬃcandup-to-
+date common attack traﬃc representative of a real network
+environment. M/_his dataset constructs the abstract behavior
+of 25 users based on HTTP, HTTPS, FTP, SSH, and e-mail
+protocolstoaccuratelysimulatearealnetworkenvironment.
+M/_hedatacaptureperiodwasfrom9a.m.onJuly3,2017,to5
+p.m.onJuly7,2017;atotalof51.1gdataﬂowwasgenerated
+overthisﬁve-dayperiod.M/_heattacktraﬃccollectedincludes
+eight types of attack: FTP-Patator, SSH-Patator, DoS,
+Heartbleed, Web Attack, Inﬁltration, Botnet, and DDoS. As
+shown in Table 1, the attacks were carried out on Tuesday,
+Wednesday, M/_hursday, and Friday morning and afternoon.
+NormaltraﬃcwasgeneratedthroughoutthedayonMonday
+and during the nonaggressive period from Tuesday to Fri-
+day. M/_he data type for this dataset is a pcap ﬁle.
+Afteracquiringthedataset,weanalyzedtheoriginaldata
+and selected seven types of data for subsequent assessment
+according to the amount of data and its noise rate. M/_hey are
+Normal, FTP-Patator, SSH-Patator, DoS, Heartbleed, In-
+ﬁltration, and PortScan.
+3.2.NetworkTraﬃcSegmentationMethod. M/_heformatofthe
+CICIDS2017datasetisonepcapﬁleperday.M/_hesepcapﬁles
+contain a great deal of information, which is not conducive
+totrainingthemachine.M/_herefore,theprimarytaskoftraﬃc
+classiﬁcation based on machine learning is to divide con-
+tinuous pcap ﬁles into several discrete units according to a
+certain granularity. M/_here are six ways to slice network
+traﬃc: by TCP, by connection, by network ﬂow, by session,
+byserviceclass,andbyhost.Whentheoriginaltraﬃcdatais
+segmentedaccordingtodiﬀerentmethods,itsplitsintoquite
+diﬀerent forms, so theselected network traﬃc segmentation
+method markedly inﬂuences the subsequent analysis.
+We adopted a session sharding method in this study. A
+sessionisanypacketthatconsistsofabidirectionalﬂow,that
+is,anypacketthathasthesamequad(sourceIP,sourceport,
+destination IP, destination port, and transport layer pro-
+tocol)andinterchangeablesourceanddestinationaddresses
+and ports.
+3.3.DataPreprocessing. Data preprocessing begins with the
+originalﬂow,namely,thedatainpcapformat,forformatting
+the model input data. M/_he CICIDS2017 dataset provides an
+originaldatasetinpcapformatandaCSVﬁledetailingsome
+of the traﬃc. To transform the original data into the model
+input format, we conducted time division, traﬃcSecurityandCommunicationNetworks 3
+
+--- PAGE 4 ---
+segmentation, PKL ﬁle generation, PKL ﬁle labeling, matrix
+generation, and one_hot encoding. A ﬂow chart of this
+process is given in Figure 1.
+Step 1(time division). Time division refers to intercepting
+the pcap ﬁle of the corresponding period from the original
+pcap ﬁle according to the attack time and type [30]. M/_he
+input format is, again, apcap ﬁle; theoutput format is still a
+pcapﬁle.M/_hetimeperiodscorrespondingtothespeciﬁctype
+and the size of the ﬁle are shown in Table 2.
+Step 2(traﬃc segmentation). Traﬃc segmentation refers to
+dividing the pcap ﬁle obtained in Step 1 into corresponding
+sessions by sharding according to the IP of attack host and
+victim host corresponding to each time period [31]. M/_he
+speciﬁc process is shown in Figure 2. M/_his step involves
+shreddingthepcapﬁleofStep1intothecorrespondingﬂow
+using pkt2ﬂow [31], which can split the pcap package into
+theﬂowformat(i.e.,theoriginalpcappackageisdividedinto
+diﬀerent pcap packages according to the ﬂow with diﬀerent
+ﬁve-tuples). Next, the pcap package is merged under the
+premisethatthesourceanddestinationareinterchangeable.
+Finally, the pcap package of Step 1 is divided into sessions.
+Step3(generatethePKLﬁle)andStep4(tagthePKLﬁle).As
+shown in Table 1, the pcap ﬁle is still large in size after
+extraction;thiscreatesaseriouschallengefordatareadingin
+the model. To accelerate the data reading process, we
+packaged the traﬃc using the pickle tool in Python. We use
+PortScantypetraﬃcas anexampleof thepackagingprocess
+here. In this class, many sessions are generated after Step 2,
+eachof whichis saved inapcap ﬁle.We generatedalabelof
+the corresponding attack type for each session. Each session
+containsseveraldataﬂows,andeachdataﬂowcontainsan n1
+packet. We then saved the n2sessions in a PKL ﬁle to speed
+up the process of reading the data. n1can be changed as
+needed; according to the experimental results, we ﬁnally
+selected the best value, that is, n1�8. M/_he value of n2can be
+calculatedbyformula(1).Inthiscase,wepackagedeachtype
+ofsessionsintoaPKLﬁle.M/_hestructureoftheentirePKLﬁle
+is shown in Figure 3.
+n2�totalnumberof packetsof thistype
+n1.(1)
+Step 5(matrix generation). M/_he input of the model must
+haveaﬁxedlength,so thenextstepistounifythelength
+of each session. M/_he diﬀerence between each attack is
+mainly in the header, so we dealt with the packetaccordingtotheuniformlengthofPACKET_LENbytes;
+that is, if the packet length was greater than PACK-
+ET_LEN, then bytes were intercepted, and if the packet
+length was less than PACKET_LEN, bytes were ﬁlled
+with -1. Each session is then divided into a matrix
+MAX_PACKET_NUM_PER_SESSION ∗PACKET_LEN.
+According to the results of our experiment, we ﬁnally
+chose MAX_PACKET_NUM_PER_SESSION as 8 and
+PACKET_LEN as 40.
+Step 6(one_hot encoding). To eﬀectively learn and classify
+the model, the data from Step 5 are processed by one_hot
+encoding to convert qualitative features into quantitative
+features:Table1: CICIDS2017 dataset.
+Date Type Size
+Monday Normal 11.0GB
+Tuesday Normal+Force+SFTP+SSH 11.0GB
+Wednesday Normal+Dos+Heartbleed Attacks 13GB
+M/_hursday Normal+XSS+Web Attack+Inﬁltration 7.8GB
+Friday Normal+Botnet+PortScan+DDoS 8.3GBpacp ﬁles
+Unify the lengthTime division
+Traﬃc segmentation
+Generate PKL ﬁles
+Label PKL ﬁles
+Generate the matrix
+One_hot encoding
+Input into the modelStep 1
+Step 2
+Step 3
+Step 4
+Step 5
+Step 6
+Figure1: Data preprocessing process.
+Table2: Distribution of network traﬃc periods in CICIDS2017
+dataset.
+Attack Time Size
+Normal Monday 11GB
+FTP-Patator Tuesday (9:20–10:20) 12MB
+SSH-Patator Tuesday (14:00–15:00) 25MB
+DoS Wednesday (9:47–11:23) 2.3GB
+Heartbleed Wednesday (15:12–15:32) 79MB
+Inﬁltration M/_hursday (14:19–15:45) 21MB
+PortScan Friday (13:55–14:35) 31MB4 SecurityandCommunicationNetworks
+
+--- PAGE 5 ---
+ohei(B,num)�num, B�i,
+0, B≠i,/braceleftBigg
+OHEjohej1,...,ohej(Length) /parenleftBig /parenrightBig �ohe1⊕...⊕oheLength,
+Inputk�OHE1
+OHE2
+...
+OHEN,
+(2)
+whereBisabyteinthedatapacket;numisthenumberused
+for encoding in one_hot encoding. In the model imple-
+mentation, num�1,oheiisabitintheone_hotencodingofa
+byte,⊕is the series notation, and OHEjis the one_hot
+encoding of a byte.
+4. DL-IDS Architecture
+M/_hissectionintroducesthetraﬃcclassiﬁerwebuiltintoDL-
+IDS, which uses a combination of CNN and LSTM to learn
+andclassifytraﬃcpacketsinbothtimeandspace.According
+tothediﬀerentcharacteristicsofdiﬀerenttypesoftraﬃc,we
+alsousedtheweightofclassestoimprovethestabilityofthe
+model.
+M/_he overall architecture of the classiﬁer is shown in
+Figure 4. M/_he classiﬁer is composed of CNN and LSTM.
+M/_he CNN section is composed of an input and embedded
+layer, convolution layer 1, pooling layer 2, convolution
+layer 3, pooling layer 4, and full connection layer 5. Upon
+receiving a preprocessed PKL ﬁle, the CNN section
+processes it and returns a high-dimensional package
+vector to the LSTM section. M/_he LSTM section iscomposed of the LSTM layer 6, LSTM layer 7, full con-
+nection layer 8, and the OUTPUT layer. It can process a
+series of high-dimensional package vectors and output a
+vector that represents the probability that the session
+belongs to each class. M/_he Softmax layer outputs the ﬁnal
+result of the classiﬁcation according to the vector of
+probability.
+4.1. CNN in DL-IDS. We converted the data packets ob-
+tained from the preprocessed data into a traﬃc image. M/_he
+so-called traﬃc image is a combination of all or part of the
+bitvaluesofanetworktraﬃcpacketintoatwo-dimensional
+matrix.M/_hedatainthenetworktraﬃcpacketiscomposedof
+bytes. M/_he value range of the bytes is 0–255, which is the
+sameasthevaluerangeofthebytesinimages.Wetookthe x
+byte in the header of a packet and the ybyte in the payload
+and composed them into a traﬃc image for subsequent
+processing, as discussed below.
+As mentioned above, the CNN section is composed of
+input and embedded layers, convolution layer 1, pooling
+layer 2, convolution layer 3, pooling layer 4, and full
+connection layer 5. We combined convolution layer 1 and
+poolinglayer2intoCombinationIandconvolutionlayer3
+and pooling layer 4 into Combination II. Each Combi-
+nation allows for the analysis of input layer characteristics
+from diﬀerent prospective. In Combination I, a convo-
+lution layer with a small convolution kernel is used to
+extract local features of traﬃc image details (e.g., IP and
+Port).Clear-cutfeaturesandstableresultscanbeobtained
+in the pooling layer. In Combination II, a large convo-
+lution kernel is used to analyze the relationship between
+twobitsthatarefarapart,suchasinformationinthetraﬃc
+payload.
+After preprocessing and one_hot coding, the network
+traﬃc constitutes the input vector of the input layer. In the
+input layer, length information is intercepted from the ith
+packetPkgi�(B1,B2,...,BLength)followedbysynthesis Sof
+n Pkgs information set S�(Pkg1,Pkg2,...,Pkgn).
+Formula 3 shows a convolution layer, where fis the side
+length of the convolution kernel. In the two convolution
+layers,f�7 andf�5.sis stride, pis padding, bis bias,wis
+weight,cischannel, lislayer,LlisthesizeofZl,andZ(i,j)is
+the pixel of the corresponding feature map. Additionally
+(i,j)∈0,1,2,...,Ll+1/braceleftbig /bracerightbig Ll+1�((Ll+2p−f)/s)+1.PKL ﬁle
+Session
+Flow
+PacketA format for
+storing ﬁles in
+python for
+direct code
+readingPackages
+consisting of
+two-way
+/f_lowsPackages with
+the same
+quintileData units in TCP/IP
+protocol
+communication and
+transmission
+Figure3: Structure of entire PKL ﬁle.
+Outputpcap ﬁles from Step 1
+Traﬃc to /f_low
+Merge the /f_low
+Figure2: Traﬃc segmentation process.SecurityandCommunicationNetworks 5
+
+--- PAGE 6 ---
+Zl+1(i,j)�/summationdisplayc
+k�1/summationdisplayf
+x�1/summationdisplayf
+y�1Z1
+k(s∗i+x,s∗j+y)∗wl+1
+k(x,y) /bracketleftBig /bracketrightBig +b.
+(3)
+M/_he convolution layer contains an activation function
+(formula4)thatassistsintheexpressionofcomplexfeatures.
+KisthenumberofchannelsinthecharacteristicgraphandA
+represents the output vector of the Zvector through the
+activation function. We used sigmoid and ReLU, respec-
+tively, after two convolution layers.
+A1
+i,j,k�f Z1
+i,j,k/parenleftBig /parenrightBig. (4)
+After feature extraction in the convolution layer, the
+output image is transferred to the pooling layer for feature
+selection and information ﬁltering. M/_he pooling layer con-
+tains a preset pooling function that replaces the result of a
+single point in the feature map with the feature graph
+statistics of its adjacent region. M/_he pooling layer is calcu-
+latedbyformula5,where pistheprespeciﬁedparameter.We
+applied the maximum pooling in this study, that is,
+p⟶∞.
+Al
+k(i,j)�/summationdisplayf
+x�1/summationdisplayf
+y�1Al
+k(s∗i+x,s∗j+y)p  1/p
+.(5)
+Wealsousedaback-propagationalgorithmtoadjustthe
+model parameters. In the weight adjustment algorithm
+(formula6), δisdeltaerroroflossfunctiontothelayer,and
+αis the learning rate.
+wl�wl−α/summationdisplayδl∗Al−1. (6)
+We used the categorical cross-entropy algorithm in the
+loss function. In order to reduce training time and enhance
+the gradient descent accuracy, we used the RmsProp opti-
+mization function to adjust the learning rate.
+After two convolution and pooling operations, we
+extractedtheentiretraﬃcimageintoasmallerfeatureblock,
+whichrepresentsthefeatureinformationofthewholetraﬃc
+packet.M/_heblockcanthenbefedintotheRNNsystemasan
+input to the RNN layer.4.2. LSTM in DL-IDS. Normal network communications
+and network attacks both are carried out according to a
+certain network protocol. M/_his means that attack packets
+must be ensconced in traﬃc alongside packets containing
+ﬁxed parts of the network protocol, such as normal con-
+nection establishments, key exchanges, connections, and
+disconnections. In the normal portion of the attack traﬃc,
+no data can be used to determine whether the packet is
+intended to cause an attack. Using a CNN alone to train the
+characteristicsofasinglepacketasthebasisforthesystemto
+judge the nature of the traﬃc makes the data diﬃcult to
+mark, leaves too much “dirty” data in the traﬃc, and pro-
+duces altogether poor training results. In this study, we
+remedied this by introducing the LSTM, which takes the
+data of a single connection (from initiation to disconnec-
+tion) as a group and judges the characteristics of all data
+packets in said group and the relations among them as a
+basis to judge the nature of the traﬃc. M/_he natural language
+processing model performs well in traﬃc information
+processing[32]underasimilarmethodologyasthegrouping
+judgment method proposed here.
+M/_he LSTM section is composed of LSTM layer 6, LSTM
+layer 7, full connection layer 8, and Softmax and output
+layers. M/_he main functions are realized by two LSTM layers.
+M/_he LSTM is a special RNN designed to resolve gradient
+disappearance and gradient explosion problems in the
+process of long sequence training. General RNN networks
+only have one tanh layer, while LSTM networks perform
+better processing timing prediction through their unique
+forgetting and selective memory gates. Here, we call the
+LSTMnodeacell (Ct),theinputandoutputofwhichare xt
+andht, respectively.
+M/_he ﬁrst step in the LSTM layer is to determine what
+information the model will discard from the cell state. M/_his
+decisionismadethroughtheforgettinggate(formula7).M/_he
+gatereadsht−1andxtandoutputsavaluebetween0and1to
+each number in the Ct−1cell state; 1 means “completely
+retained” and 0 means “completely discarded.” Wandbare
+weight and bias in the neural network, respectively.
+ft�σWf·ht−1,xt/bracketleftbig /bracketrightbig+bf /parenleftBig /parenrightBig . (7)Input C1S2C3S4S5L6 L7 F8
+Output
+So/f_tma x
+LSTM LSTMConvolution MaxPool•••Convolution
+MaxPoolGlobalMaxPool •••
+Figure4: Architecture of DL-IDS.6 SecurityandCommunicationNetworks
+
+--- PAGE 7 ---
+M/_henextstepistodecidehowmuchnewinformationto
+add to the cell state. First, a sigmoid layer determines which
+information needs to be updated (formula 8). A tanh layer
+generatesavectorasanalternativeforupdating(formula9).
+M/_he two parts are then combined to make an update to the
+state of the cell (formula 10).
+it�σWi·ht−1,xt/bracketleftbig /bracketrightbig+bi /parenleftbig /parenrightbig , (8)
+/tildewideCt�tanh Wc·ht−1,xt/bracketleftbig /bracketrightbig+bc /parenleftbig /parenrightbig ,(9)
+Ct�ft∗Ct−1+it∗/tildewideCt. (10)
+M/_heoutputgatedeterminestheoutputofthecell.First,a
+sigmoid layer determines which parts of the cell state are
+exported (formula 11). Next, the cell state is processed
+through atanh function to obtain a value between −1 and 1
+and then multiplied by the output of the sigmoid gate. M/_he
+output is determined accordingly (formula 12).
+ot�σWo·ht−1,xt/bracketleftbig /bracketrightbig+bo /parenleftbig /parenrightbig ,(11)
+ht�ot∗tanh Ct/parenleftbig /parenrightbig. (12)
+In the proposed model, the feature maps of ndata packets
+inagroupoftraﬃcimagesinaconnectionserveastheinputof
+the LSTM section. M/_he feature relations between these ndata
+packets were analyzed through the two LSTM layers. M/_he ﬁrst
+fewpacketsmaybeusedtoestablishconnections;suchpackets
+mayexistinthenormaldatastreams,buttheymayoccurinthe
+attackdatastreamstoo.M/_henextfewpacketsmaycontainlong
+payloads as well as attack data. M/_he LSTM ﬁnds the groups
+containing attack data and marks all packets of those whole
+groups as attack groups.
+LSTM layer 6 in DL-IDS has a linear activation function
+designed to minimize the training time. LSTM layer 7 is
+nonlinearly activated through the ReLU function. M/_he ﬂow
+comprises a multiclassiﬁcation system, so the model is
+trained to minimize multiclass cross-entropy. We did not
+update the ownership weight at every step but instead only
+needed to add the initial weight according to the volume of
+various types of data.
+4.3.WeightofClasses. M/_hedataobtainedafterpreprocessing
+is shown in Table 3, where, clearly, the quantities (“num-
+bers”)ofdiﬀerentdatatypesareuneven.M/_henumberoftype
+0 is the highest, while those of types 2 and 4 are the lowest.
+M/_his may aﬀect the ﬁnal learning outcome of the classiﬁ-
+cation. For example, if the machine were to judge all the
+traﬃcas type0, theaccuracyof themodelwould seem tobe
+relatively high. We introduced the weights of classes to
+resolve this problem: classes with diﬀerent sample numbers
+in the classiﬁcation were given diﬀerent weights, class_-
+weight is set according to the number of samples, and
+classweight[i]isusedinsteadof1topunishtheerrorsinthe
+class[i]samples. A higher class_weight means a greater
+emphasis on the class. Compared with the case without
+considering the weight, more samples are classiﬁed into
+high-weight classes.M/_he class weight is calculated via formula 13, where wi
+represents the class weight of class iandnirepresents the
+amount of traﬃc of class i.
+wi�/summationtextK−1
+i�0ni
+ni. (13)
+When training the model, the weighted loss function in
+formula 14 makes the model focus more on samples from
+underrepresented classes. Kis the number of categories, yis
+the label (if the sample category is i, thenyi�1; otherwise
+yi�0) andpis the output of the neural network, which is
+the probability that the model predicts that the category is i
+andiscalculatedbySoftmaxinthismodel.Lossfunction Jis
+deﬁned as follows:
+J�−/summationdisplayK−1
+i�0wiyilogpi/parenleftbig /parenrightbig. (14)
+5. Experimental Results and Analysis
+Weevaluatedtheperformanceoftheproposedmodelonthe
+CICIDS2017datasetusingaseriesofselectedparameters:(1)
+theimpactofthelengthofdatapacketsinvolvedintraining;
+(2) the inﬂuence of the number of packets in each ﬂow; (3)
+the impact of the selected batch size; (4) the eﬀect of the
+numberofunitsinLSTM;and(5)theinﬂuenceoftheweight
+ofclasses.WeoptimizedtheDL-IDSparametersaccordingly
+and then compared them against a sole CNN and a sole
+LSTM. M/_he ratio of Train set, Validation set, and Test set is
+18:1:1.
+5.1. Metrics. We adopted four commonly used parameters
+for evaluating intrusion detection systems: accuracy (ACC),
+true positive rate (TPR), false positive rate (FPR), and F1-
+score.ACCrepresentstheoverallperformanceofthemodel,
+TPR represents the ratio of the real positive sample in the
+current positive sample to all positive samples, and FPR
+represents the ratio of the real negative sample wrongly
+assignedtothepositivesampletypetothetotalnumberofall
+negative samples. Recall represents the number of True
+Positives divided by the number of True Positives and the
+numberofFalseNegatives.Precisionrepresentsthenumber
+of positive predictions divided by the total number of
+positive class values predicted. F1-score is a score of a
+classiﬁer’saccuracyandisdeﬁnedastheweightedharmonic
+mean of the Precision and Recall measures of the classiﬁer.Table3: Quantity of data per category in CICIDS2017.
+Label Attack Num
+0 Normal 477584
+1 FTP-Patator 11870
+2 SSH-Patator 7428
+3 DoS 63240
+4 Heartbleed 4755
+5 Inﬁltration 64558
+6 PortScan 160002SecurityandCommunicationNetworks 7
+
+--- PAGE 8 ---
+ACC�TP+TN
+TP+FP+FN+TN∗100%,
+TPR�TP
+TP+FN∗100%,
+FPR�FP
+FP+TN∗100%,
+Precision�TP
+TP+FP∗100%,
+Recall�TP
+TP+FN∗100%,
+F1−score�2∗Precision∗Recall
+Precision+Recall∗100%.(15)
+For each type of attack, TP is the number of samples
+correctly classiﬁed as this type, TN is the number of
+samples correctly classiﬁed as not this type, FP is the
+number of samples incorrectly classiﬁed as this type, and
+FN is the number of samples incorrectly classiﬁed as not
+thistype.M/_hedeﬁnitionsofTP,TN,FP,andFNaregivenin
+Figure 5.
+5.2. Experimental Environment. M/_he experimental conﬁgu-
+rationweusedtoevaluatethemodelparametersisdescribed
+in Table 4.
+5.3. LSTM Unit Quantity Eﬀects on Model Performance.
+M/_he number of units in the LSTM represents the model’s
+output dimension. In our experiments, we found that
+model performance is ﬁrst enhanced and then begins to
+declineasthenumberofLSTMunitscontinuallyincreases.
+Weultimately selected85astheoptimalnumberofLSTM
+units.
+5.4. Training Packet Length Eﬀects on Model Performance.
+Figure 6 shows the changes in ACC, TPR, and FPR with
+increase in the length of packets extracted during training.
+As per the training results, model performance signiﬁcantly
+declines when the package length exceeds 70. It is possible
+that excessively long training data packets increase the
+proportion of data packets smaller than the current packet
+length,leadingtoanincreaseintheproportionofunitswith
+a median value of −1 and thus reducing the accuracy of the
+model. However, the data packet must exceed a certain
+length to ensure that eﬀective, credible, and scientiﬁc
+content is put into training. M/_his also prevents overﬁtting
+eﬀects and provides more accurate classiﬁcation ability for
+data packets with partial header similarity. We found that a
+length of 40 is optimal.
+Under the condition that the packet length is 40, the
+eﬃciency and performance of the DL-IDS intrusiondetection system in identifying various kinds of traﬃc are
+shown in Table 5.
+5.5. Per-Flow Packet Quantity Eﬀects on Model Performance.
+As the number of data packets in each ﬂow involved in the
+training process increases, the features extracted by the
+model become more obvious and the recognition accuracy12 0 0 0 0 0 0 0
+0 00
+000
+0 0
+00
+0 0
+0 00
+0
+00
+81 1
+1 11 3
+33
+22
+0 0 0 0 000 1 0 0
+000000 0 0 0 0 000000 0 0 0
+00
+0000
+00
+000
+00 0
+00
+00
+00 0
+010
+10
+19
+19
+15
+15
+131721
+7
+True negatives
+False negatives
+False positives
+TN
+FPTPFN
+TNTNActual
+Predicted
+Figure5: TP, TN, FP, and FN in multiple classiﬁcations.
+Table4: Experimental environment.
+OS CentOS Linux release 7.5.1804
+CPU Intel (R) Xeon (R) CPU E5-2620 v3 @ 2.40GHz
+RAM 126GB
+Anaconda 4.5.11
+Keras 2.2.2
+Python 3.6.5
+100
+80
+60
+40
+20
+0ACC/TPR/FPR rate
+30 40 50 60 70 80 90 100
+Packet length
+TPR
+FPR
+ACC
+Figure6:Impact oftrainingpacketlengthonmodel performance.8 SecurityandCommunicationNetworks
+
+--- PAGE 9 ---
+of the model is enhanced. If this number is too high,
+however, the proportion of ﬁlling data packets increases,
+thusaﬀectingthemodel’sabilitytoextractfeatures.Figure7
+shows the impact of the number of packets per ﬂow on
+model performance. We found that when the number of
+packetsineachﬂowexceeds8,theperformanceofthemodel
+declinessigniﬁcantly.Wechose8astheoptimalvalueofper-
+ﬂow packet quantity in the network.
+5.6.BatchSizeEﬀectsonModelPerformance. Batchsizeisan
+importantparameterinthemodeltrainingprocess.Withina
+reasonable range, increasing the batch size can improve the
+memory utilization and speed up the data processing. If
+increased to an inappropriate extent, however, it can sig-
+niﬁcantly slow down the process. As shown in Figure 8, we
+found that a batch size of 20 is optimal.
+5.7. Class Weight Eﬀects on Model Performance. Table 6
+shows a comparison of two groups of experimental results
+withandwithoutclassweights.Introducingtheclassweight
+does appear to reduce the impact of the imbalance of the
+number of data of various types in the CICIDS2017 dataset
+on model performance.5.8. Model Evaluation. M/_he LSTM unit can eﬀectively ex-
+tract the temporal relationship between packets. Table 7
+shows a comparison of accuracy between the DL-IDS
+model and models with the CNN or LSTM alone. M/_he
+LSTM unit appears to eﬀectively improve the identiﬁca-
+tion eﬃciency of SSH-Patator, Inﬁltration, PortScan, and
+other attack traﬃc for enhanced model performance,
+possibly due to the apparent timing of these attacks.
+Compared to the LSTM model alone, however, adding a
+CNNfurtherimprovestheidentiﬁcationeﬃciencyofmost
+attack traﬃc. As shown in Table 7, the proposed DL-IDS
+intrusiondetectionmodelhasverylowfalsealarmrateand
+can classify network traﬃc more accurately than the CNN
+or LSTM alone.
+Table8showsacomparisonofmodelsusingCNNand
+LSTM with traditional machine learning algorithms [33].
+M/_he DL-IDS model achieves the best performance among
+them, with the largest ACC value and the lowest FPR
+value.
+M/_hedatainputtoDL-IDSisrawnetworktraﬃc.M/_hereis
+no special feature extraction in the model; the training and
+testing time include the feature extraction time. M/_he tradi-
+tional machine learning algorithm does not consider data
+extraction or processing time, so we could not directly
+compare the time consumption of the various algorithms in
+Table8.M/_hetrainingtimeandtestingtimeofthemodelwere
+under600sand100s,respectively,sowebelievethattheDL-
+IDS achieves optimal detection eﬀects in the same time
+frame as the traditional algorithm.Table5: Model performance with training packet length of 40.
+Label ACC (%) TPR (%) FPR (%) F1-score (%)
+Normal 99.54 99.52 0.00 99.61
+FTP-Patator 99.62 92.29 0.27 91.45
+SSH-Patator 99.63 87.04 0.00 86.87
+Dos 99.61 98.25 0.00 97.87
+Heartbleed 99.66 81.12 0.00 81.20
+Inﬁltration 99.55 98.07 0.18 97.54
+PortScan 99.54 98.42 0.00 98.71
+Overall 98.67 97.21 0.47 93.32
+100
+80
+60
+40
+20
+0ACC/TPR/FPR rate
+6 8 10 12 14 16
+Packet number per ﬂow
+TPR
+FPR
+ACC
+Figure 7: Impact of per-ﬂow packet quantity on model
+performance.TPR
+FPR
+ACC100
+80
+60
+40
+20
+0ACC/TPR/FPR rate
+01 0 2 0 3 0 4 0
+Batchsize
+Figure8: Selected batch size aﬀecting model performance.
+Table6: Eﬀects of applying class weight on model performance.
+Without class weights (%) With class weights (%)
+ACC 97.16 98.58
+TPR 93.33 97.04
+FPR 0.38 0.52SecurityandCommunicationNetworks 9
+
+--- PAGE 10 ---
+6. Conclusions and Future Research Directions
+In this study, we proposed a DL-based intrusion detection
+system named DL-IDS, which utilized a hybrid of Con-
+volutional Neural Network (CNN) and Long Short-Term
+Memory (LSTM) to extract features from the network
+data ﬂowtoanalyze thenetwork traﬃc. InDL-IDS, CNN
+and LSTM, respectively, extract the spatial features of a
+single packet and the temporal feature of the data stream
+and ﬁnally fuse them, which improve the performance of
+intrusion detection system. Moreover, DL-IDS uses
+category weights for optimization in the training phase.
+M/_his optimization method reduced the adverse of the
+numberofunbalancedsamplesofattacktypesinTrainset
+and improved the robustness of the model.
+To evaluate the proposed system, we experimented on
+the CICIDS2017 dataset, which is often used by researchers
+forthebenchmark.Normaltraﬃcdataandsomeattackdata
+of six typical types of FTP-Patator, SSH-Patator, Dos,
+Heartbleed, Inﬁltration, and PortScan were selected to test
+the ability of DL-IDS to detect attack data. Besides, we also
+used the same data to test the CNN-only model, the LSTM-
+only model, and some commonly used machine learning
+models.
+M/_he results show that DL-IDS reached 98.67% and
+93.32%inoverallaccuracyandF1-score,respectively,which
+performed better than all machine learning models. Also,
+compared with the CNN-only model and the LSTM-only
+model, DL-IDS reached over 99.50% in the accuracy of all
+attacktypesandachievedthebestperformanceamongthese
+three models.
+M/_here are yet certain drawbacks to the proposed model,
+including low detection accuracy on Heartbleed and SSH-
+Patator attacks due to data lack. Generative Adversarial
+Networks (GAN) may be considered to overcome the
+drawback to some degree. Further, combining with sometraditional traﬃc features may enhance the overall model
+performance. We plan to resolve these problems through
+further research.
+Data Availability
+Data will be made available upon request.
+Conflicts of Interest
+M/_he authors declare no conﬂicts of interest.
+Acknowledgments
+M/_his research was funded by Beijing Natural Science
+Foundation under Grant no. 4194086, the National Natural
+ScienceFoundationofChinaunderGrantno.61702043,and
+the Key R&D Program of Heibei Province under Grant no.
+201313701D.
+References
+[1] M. M. Hassan, A. Gumaei, S. Huda, and A. Ahmad, “In-
+creasing the trustworthiness in the industrial IoT networks
+through a reliable cyberattack detection model,” IEEE
+Transactions on Industrial Informatics , vol. 16, no. 9, 2020.
+[2] F. A. Khan and A.Gumaei, “A comparative studyof machine
+learning classiﬁers for network intrusion detection,” in Pro-
+ceedings of the International Conference on Artiﬁcial Intelli-
+genceandSecurity ,pp.75–86,NewYork,NY,USA,July2019.
+[3] M. Alqahtani, A. Gumaei, M. Mathkour, and M. Maher Ben
+Ismail,“Agenetic-basedextremegradientboostingmodelfor
+detecting intrusions in wireless sensor networks,” Sensors,
+vol. 19, no. 20, p. 4383, 2019.
+[4] A. Derhab, M. Guerroumi, A. Gumaei et al., “Blockchain and
+random subspace learning-based IDS for SDN-enabled in-
+dustrial IoTsecurity,” Sensors, vol. 19, no. 14, p. 3119, 2019.
+[5] T. Yaqoob, H. Abbas, and M. Atiquzzaman, “Security vul-
+nerabilities, attacks, countermeasures, and regulations of
+networked medical devices-a review,” IEEE Communications
+Surveys & Tutorials , vol. 21, no. 4, pp. 3723–3768, 2019.
+[6] X. Jing, Z. Yan, X. Jiang, and W. Pedrycz, “Network traﬃc
+fusion and analysis against DDoS ﬂooding attacks with a
+novel reversible sketch,” Information Fusion , vol. 51, no. 51,
+pp. 100–113, 2019.
+[7] Z. A. Baig, S. Sanguanpong, S. N. Firdous et al., “Averaged
+dependence estimators for DoS attack detection in IoT net-
+works,” Future Generation Computer Systems , vol. 102,
+pp. 198–209, 2020.Table7: CNN, LSTM, and CNN+LSTM results.
+LabelCNN (%) LSTM (%) CNN+LSTM (%)
+ACC TPR FPR F1-score ACC TPR FPR F1-score ACC TPR FPR F1-score
+Normal 99.57 99.56 0.00 99.64 99.56 99.55 0.00 99.63 99.54 99.52 0.00 99.61
+FTP-Patator 99.45 91.95 0.27 89.95 99.34 89.27 0.15 91.72 99.62 92.29 0.27 91.45
+SSH-Patator 99.53 80.90 0.00 87.22 98.91 79.91 0.00 86.66 99.63 87.04 0.00 86.87
+Dos 99.53 98.04 0.00 97.86 98.55 94.85 0.13 89.89 99.61 98.25 0.00 97.87
+Heartbleed 99.64 80.08 0.00 80.88 99.63 81.12 0.07 77.69 99.66 81.12 0.00 81.20
+Inﬁltration 99.59 97.91 0.07 97.75 98.84 96.80 1.16 97.17 99.55 98.07 0.18 97.54
+PortScan 99.35 97.48 0.00 98.51 99.42 97.99 0.00 94.04 99.54 98.42 0.00 98.71
+Overall 98.44 96.46 0.36 93.11 96.83 94.21 1.54 90.97 98.67 97.21 0.47 93.32
+Table8: CNN and LSTM models versus traditional machine
+learning algorithms.
+ACC (%) TPR (%) FPR (%) F1-score(%)
+MultinomialNB 72.52 78.20 33.16 52.06
+Random Forest 96.08 95.47 3.30 76.71
+J48 97.32 96.80 2.17 91.43
+Logistic Regression 97.68 94.96 1.47 90.55
+DL-IDS 98.67 97.21 0.47 93.3210 SecurityandCommunicationNetworks
+
+--- PAGE 11 ---
+[8] Y.Yuan,H.Yuan,D.W.C.Ho,andL.Guo,“Resilientcontrol
+of wireless networked control system under denial-of-service
+attacks: a cross-layer design approach,” IEEE Transactions on
+Cybernetics , vol. 50, no. 1, pp. 48–60, 2020.
+[9] A. Verma and V. Ranga, “Statistical analysis of CIDDS-001
+dataset for network intrusion detection systems using dis-
+tance-based machine learning,” Procedia Computer Science ,
+vol. 125, pp. 709–716, 2018.
+[10] H. Xu, F. Mueller, M. Acharya et al., “Machine learning
+enhanced real-time intrusion detection using timing infor-
+mation,” in Proceedings of the International Workshop on
+Trustworthy & Real-Time Edge Computing for Cyber-Physical
+Systems, Nashville, TN, USA, 2018.
+[11] Y. Wang, W. Meng, W. Li, J. Li, W.-X. Liu, and Y. Xiang, “A
+fog-based privacy-preserving approach for distributed sig-
+nature-based intrusion detection,” Journal of Parallel and
+Distributed Computing , vol. 122, pp. 26–35, 2018.
+[12] H. Xu, C. Fang, Q. Cao et al., “Application of a distance-
+weighted KNN algorithm improved by moth-ﬂame optimi-
+zation in network intrusion detection,” in Proceedings of the
+2018 IEEE 4th International Symposium on Wireless Systems
+within the International Conferences on Intelligent Data Ac-
+quisition and Advanced Computing Systems (IDAACS-SWS) ,
+pp. 166–170, IEEE, Lviv, Ukraine, September 2018.
+[13]S. Teng, N. Wu, H. Zhu, L. Teng, and W. Zhang, “SVM-DT-
+basedadaptiveandcollaborativeintrusiondetection,” IEEE/CAA
+Journal of Automatica Sinica , vol. 5, no. 1, pp. 108 –118, 2018.
+[14] J. Liu and L. Xu, “Improvement of SOM classiﬁcation algo-
+rithm and application eﬀect analysis in intrusion detection,”
+Recent Developments in Intelligent Computing, Communica-
+tion and Devices , pp. 559–565, Springer, Berlin, Germany,
+2019.
+[15] Y. Bengio, A. Courville, and P. Vincent, “Representation
+learning: a review and new perspectives,” IEEE Transactions
+on Pattern Analysis and Machine Intelligence , vol. 35, no. 8,
+pp. 1798–1828, 2013.
+[16] T. Ma, F. Wang, J. Cheng, Y. Yu, and X. Chen, “A hybrid
+spectral clustering and deep neural network ensemble algo-
+rithm for intrusion detection in sensor networks,” Sensors,
+vol. 16, no. 10, p. 1701, 2016.
+[17] Q.Niyaz,W.Sun,A.Y.Javaid,andM.Alam,“Adeeplearning
+approach for network intrusion detection system,” in Pro-
+ceedings of the 9th International Conference on Bio-inspired
+Information and Communications Technologies , pp. 21–26,
+Columbia, NY, USA, December 2015.
+[18] A.S.Eesa,Z.Orman,andA.M.A.Brifcani,“Anovelfeature-
+selection approach based on the cuttleﬁsh optimization al-
+gorithmforintrusiondetectionsystems,” Expert Systems with
+Applications , vol. 42, no. 5, pp. 2670–2679, 2015.
+[19] I. Goodfellow, Y. Bengio, and A. Courville, Deep Learning ,
+MIT Press, Cambridge, MA, USA, 2016.
+[20] Z. Wang, KT_he Applications of Deep Learning on Traﬃc
+Identiﬁcation ,pp.21–26,BlackHat,LasVegas,NV,USA,2015.
+[21] J.FanandK.Ling-zhi, IntrusionDetectionAlgorithmBasedon
+Convolutional Neural Network , Beijing Institude of Tech-
+nology, Beijing, China, 2017.
+[22] J. Kim, J. Kim, H. L. T. M/_hu, and H. Kim, “Long short term
+memory recurrent neural network classiﬁer for intrusion
+detection,”in Proceedingsofthe2016InternationalConference
+on Platform Technology and Service (PlatCon) ,February2016.
+[23] P. Wu and H. Guo, “LuNET: a deep neural network for
+network intrusion detection,” in Proceedings of the Sympo-
+sium Series on Computational Intelligence (SSCI) , IEEE,
+Xiamen, ChinaIEEE, Xiamen, China, December 2019.[24] C. M. Hsu, H. Y. Hsieh, S. W. Prakosa, M. Z. Azhari, and
+J. S. Leu, “Using long-short-term memory based convolu-
+tional neural networks for network intrusion detection,” in
+Proceedings of the International Wireless Internet Conference ,
+Springer, Taipei, Taiwan, pp. 86–94, October 2018.
+[25] M. Ahsan and K. Nygard, “Convolutional neural networks
+withLSTMforintrusiondetection,”in Proceedingsofthe35th
+International Conference , vol. 69, pp. 69–79, Seville, Spain,
+May 2020.
+[26] M. M. Hassan, A. Gumaei, A. Ahmed, M. Alrubaian, and
+G. Fortino, “A hybrid deep learning model for eﬃcient in-
+trusion detection in big data environment,” Information
+Sciences, vol. 513, pp. 386–396, 2020.
+[27] R. Abdulhammed, H. Musafer, A. Alessa, M. Faezipour, and
+A. Abuzneid, “Features dimensionality reduction approaches
+for machine learning based network intrusion detection,”
+Electronics , vol. 8, no. 3, p. 322, 2019.
+[28] H. Musafer, A. Abuzneid, M. Faezipour, and A. Mahmood,
+“AnenhanceddesignofSparseautoencoderforlatentfeatures
+extraction based on trigonometric simplexes for network
+intrusion detection systems,” Electronics , vol. 9, no. 2, p. 259,
+2020.
+[29] V. Ramos and A. Abraham, “ANTIDS: self organized ant
+based clustering model for intrusion detection system,” in
+ProceedingsoftheFourthIEEEInternationalWorkshoponSoft
+Computing as Transdisciplinary Science and Technology
+(WSTST’05) , Springer, Muroran, JapanSpringer, Muroran,
+Japan, May 2005.
+[30] I.Sharafaldin,A.H.Lashkari,andA.Ali,“Towardgenerating
+a new intrusion detection dataset and intrusion traﬃc
+characterization,” in Proceedings of the KT_he Fourth Interna-
+tionalConferenceonInformationSystemsSecurityandPrivacy
+(ICISSP), Madeira, Portugal, January 2018.
+[31] X. Chen, “A simple utility to classify packets into ﬂows,”
+https://github.com/caesar0301/pkt2ﬂow.
+[32] B. J. Radford and B. D. Richardson, “Sequence aggregation
+rules for anomaly detection in computer network traﬃc,”
+2018, https://arxiv.org/abs/1805.03735v2.
+[33]A.Ahmim,M.A.Ferrag,L.Maglaras,M.Derdour,andH.Janicke,
+“A detailed analysis of using supervised machine learning for in-
+trusion detection,” 2019, https://www.researchgate.net/publication/
+331673991_A_Detailed_Analysis_of_Using_Supervised_Machine_
+Learning_for_Intrusion_Detection.SecurityandCommunicationNetworks 11
+

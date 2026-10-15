@@ -1,0 +1,143 @@
+# DL-IDS Configuration
+# Based on: "DL-IDS: Extracting Features Using CNN-LSTM Hybrid Network for Intrusion Detection System"
+# Sun et al., 2020
+
+project:
+  name: "DL-IDS: AI-Based Intrusion Detection System"
+  version: "1.0.0"
+
+dataset:
+  path: "dataset"
+  # All CSV files from CICIDS2017
+  files:
+    - "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv"
+    - "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv"
+    - "Friday-WorkingHours-Morning.pcap_ISCX.csv"
+    - "Monday-WorkingHours.pcap_ISCX.csv"
+    - "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"
+    - "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv"
+    - "Tuesday-WorkingHours.pcap_ISCX.csv"
+    - "Wednesday-workingHours.pcap_ISCX.csv"
+  label_column: "Label"
+  
+  # Label mapping for multiclass classification
+  # Paper uses 7 classes: Normal, FTP-Patator, SSH-Patator, DoS, Heartbleed, Infiltration, PortScan
+  # We extend to include all labels present in the CSV files
+  label_groups:
+    BENIGN: "Normal"
+    FTP-Patator: "FTP-Patator"
+    SSH-Patator: "SSH-Patator"
+    DoS Hulk: "DoS"
+    DoS GoldenEye: "DoS"
+    DoS slowloris: "DoS"
+    DoS Slowhttptest: "DoS"
+    Heartbleed: "Heartbleed"
+    Infiltration: "Infiltration"
+    PortScan: "PortScan"
+    DDoS: "DDoS"
+    Bot: "Bot"
+    "Web Attack  Brute Force": "Web Attack"
+    "Web Attack  XSS": "Web Attack"
+    "Web Attack  Sql Injection": "Web Attack"
+    "Web Attack \u2013 Brute Force": "Web Attack"
+    "Web Attack \u2013 XSS": "Web Attack"
+    "Web Attack \u2013 Sql Injection": "Web Attack"
+    "Web Attack  Brute Force": "Web Attack"
+    "Web Attack  XSS": "Web Attack"
+    "Web Attack  Sql Injection": "Web Attack"
+
+preprocessing:
+  # Columns to drop (constant or potentially leaky)
+  drop_columns:
+    - "Bwd PSH Flags"
+    - "Fwd URG Flags"
+    - "Bwd URG Flags"
+    - "CWE Flag Count"
+    - "Fwd Avg Bytes/Bulk"
+    - "Fwd Avg Packets/Bulk"
+    - "Fwd Avg Bulk Rate"
+    - "Bwd Avg Bytes/Bulk"
+    - "Bwd Avg Packets/Bulk"
+    - "Bwd Avg Bulk Rate"
+  
+  # Train/Val/Test split ratio (paper uses 18:1:1 = 0.9/0.05/0.05)
+  train_ratio: 0.9
+  val_ratio: 0.05
+  test_ratio: 0.05
+  random_seed: 42
+  
+  # Max samples per class for memory management (0 = no limit, e.g. 25000 for balanced CPU training)
+  max_samples_per_class: 25000
+  
+  # Scaler type
+  scaler: "standard"  # standard or minmax
+
+model:
+  # CNN-LSTM Hybrid Architecture (DL-IDS from paper)
+  name: "DL-IDS"
+  
+  # Since the CSV files contain flow-level features (78 features),
+  # NOT raw packet bytes, we adapt the CNN-LSTM architecture:
+  # - CNN extracts local feature patterns from the feature vector
+  # - LSTM captures sequential dependencies across feature groups
+  
+  # CNN parameters
+  cnn:
+    # Reshape features into a 2D representation for CNN
+    # We reshape 68 features into approximately (height x width) for conv2d
+    conv1_filters: 32
+    conv1_kernel: 3
+    conv2_filters: 64
+    conv2_kernel: 3
+    pool_size: 2
+    dropout_cnn: 0.3
+  
+  # LSTM parameters (paper uses 85 units)
+  lstm:
+    hidden_size: 85
+    num_layers: 2
+    dropout_lstm: 0.3
+  
+  # Fully connected
+  fc:
+    hidden_size: 128
+    dropout_fc: 0.5
+  
+  # Activation functions
+  # Paper: sigmoid after conv1, ReLU after conv2, linear LSTM layer 1, ReLU LSTM layer 2
+  activations:
+    conv1: "sigmoid"
+    conv2: "relu"
+
+training:
+  # Batch size 128 for efficient vectorized processing on flow features
+  batch_size: 128
+  epochs: 15
+  learning_rate: 0.001
+  
+  # Paper uses RMSprop optimizer
+  optimizer: "rmsprop"
+  
+  # Paper uses categorical cross-entropy with class weights
+  loss: "cross_entropy"
+  use_class_weights: true
+  
+  # Early stopping
+  early_stopping:
+    patience: 5
+    min_delta: 0.001
+  
+  # Model checkpointing
+  checkpoint_dir: "artifacts/checkpoints"
+
+evaluation:
+  results_dir: "reports"
+  plots_dir: "reports/plots"
+
+artifacts:
+  model_dir: "artifacts"
+  preprocessor_path: "artifacts/preprocessor.joblib"
+  label_encoder_path: "artifacts/label_encoder.joblib"
+  feature_names_path: "artifacts/feature_names.json"
+  training_config_path: "artifacts/training_config.json"
+  metrics_path: "artifacts/metrics.json"

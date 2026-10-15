@@ -1,0 +1,12 @@
+# Dataset files
+dataset/
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Machine Learning artifacts (optional)
+*.pkl
+*.joblib

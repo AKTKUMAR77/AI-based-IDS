@@ -1,0 +1,26 @@
+{
+  "model_architecture": "CNN-LSTM Hybrid (DL-IDS)",
+  "num_features": 67,
+  "num_classes": 10,
+  "class_names": [
+    "Bot",
+    "DDoS",
+    "DoS",
+    "FTP-Patator",
+    "Heartbleed",
+    "Infiltration",
+    "Normal",
+    "PortScan",
+    "SSH-Patator",
+    "Web Attack"
+  ],
+  "train_samples": 101959,
+  "val_samples": 5664,
+  "test_samples": 5665,
+  "batch_size": 128,
+  "epochs_trained": 15,
+  "optimizer": "rmsprop",
+  "learning_rate": 0.001,
+  "use_class_weights": true,
+  "device": "cpu"
+}
